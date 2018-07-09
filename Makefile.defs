@@ -92,6 +92,11 @@ else ifeq ($(TARGET), pocketbook)
     export POCKETBOOK=1
     export PATH:=$(POCKETBOOK_TOOLCHAIN)/bin:$(PATH)
     export SYSROOT=$(POCKETBOOK_TOOLCHAIN)/arm-obreey-linux-gnueabi/sysroot
+else ifeq ($(TARGET), kindlefread)
+    export KINDLE=1
+#    CHOST?=arm-linux-gnueabihf
+    export EMULATE_READER=1
+    export SDL=1
 else ifndef TARGET
     # if TARGET is not defined we will build an emulator on current machine
     export EMULATE_READER=1
@@ -247,6 +252,13 @@ else ifeq ($(TARGET), pocketbook)
 else ifeq ($(TARGET), kindle)
 	ARM_ARCH:=$(ARMV7_A8_ARCH)
 	ARM_ARCH+=-mfloat-abi=softfp
+    ifeq ($(shell PATH='$(PATH)' $(CC) -dumpmachine 2>/dev/null), arm-linux-gnueabi)
+        COMPAT_CFLAGS:=$(UBUNTU_COMPAT_CFLAGS)
+        COMPAT_CXXFLAGS:=$(UBUNTU_COMPAT_CFLAGS)
+    endif
+lse ifeq ($(TARGET), kindlefread)
+	ARM_ARCH:=$(ARMV7_A8_ARCH)
+	ARM_ARCH+=-mfloat-abi=hard
     ifeq ($(shell PATH='$(PATH)' $(CC) -dumpmachine 2>/dev/null), arm-linux-gnueabi)
         COMPAT_CFLAGS:=$(UBUNTU_COMPAT_CFLAGS)
         COMPAT_CXXFLAGS:=$(UBUNTU_COMPAT_CFLAGS)

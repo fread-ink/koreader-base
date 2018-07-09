@@ -76,7 +76,7 @@ $(OUTPUT_DIR)/data:
 
 libs: \
 	$(if $(or $(SDL),$(ANDROID)),,$(OUTPUT_DIR)/libs/libkoreader-input.so) \
-	$(if $(or $(SDL),$(ANDROID)),$(OUTPUT_DIR)/libs/libblitbuffer.so,) \
+	$(if $(or $(SDL),$(ANDROID),$(FREAD)),$(OUTPUT_DIR)/libs/libblitbuffer.so,) \
 	$(OUTPUT_DIR)/libs/libkoreader-lfs.so \
 	$(OUTPUT_DIR)/libs/libkoreader-djvu.so \
 	$(OUTPUT_DIR)/libs/libkoreader-cre.so \
